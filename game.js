@@ -209,7 +209,7 @@ function startGame() {
         gameOver = true;
         bgm.pause();
         deathSound.play();
-        alert("Game Over! Press Space or Tap to restart.");
+        alert("Game Over! Luck is also part of success!\nPress Space or Tap to restart.");
         return;
       }
     }
