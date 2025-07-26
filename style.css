@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  background: #f4f4f4;
+  text-align: center;
+}
+canvas {
+  display: block;
+  margin: 0 auto;
+  background: url('assets/bg.png') repeat-x;
+  border: 1px solid #ccc;
+}
