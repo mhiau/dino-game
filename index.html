@@ -18,7 +18,12 @@
     enterkeyhint="go"
   >
   <button onclick="validatePhone()">開始遊戲</button>
-  <p id="error-msg" style="color:red;"></p>
+  <p id="error-msg" style="color:red; display:none;"></p>
+</div>
+
+<div id="game-container" style="display:none;">
+  <canvas id="gameCanvas" width="800" height="200"></canvas>
+  <script src="game.js"></script>
 </div>
 
 <script>
@@ -26,17 +31,22 @@ function validatePhone() {
   const phoneInput = document.getElementById('phone-input');
   const phone = phoneInput.value.trim();
   const errorMsg = document.getElementById('error-msg');
-
   const phoneRegex = /^[1-2][3-9][0-9]{9}$/;
+
+  if (phone === "") {
+    errorMsg.style.display = 'none';
+    return;
+  }
 
   if (phoneRegex.test(phone)) {
     document.getElementById('phone-container').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
+    errorMsg.style.display = 'none';
     startGame();
   } else {
     errorMsg.textContent = "請輸入正確的中國手機號碼";
-    phoneInput.value = ""; // 清空輸入欄
-    phoneInput.focus();    // 將焦點重新聚焦輸入欄
+    errorMsg.style.display = 'block';
+    phoneInput.value = "";
 
     // 嘗試震動裝置（若支援）
     if (navigator.vibrate) {
@@ -50,11 +60,6 @@ document.getElementById('phone-input').addEventListener('keydown', function(even
   if (event.key === 'Enter') {
     validatePhone();
   }
-});
-
-// 點擊或聚焦輸入欄時清除錯誤訊息
-document.getElementById('phone-input').addEventListener('focus', function() {
-  document.getElementById('error-msg').textContent = '';
 });
 </script>
 
