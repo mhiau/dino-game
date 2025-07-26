@@ -23,7 +23,8 @@
 
 <script>
 function validatePhone() {
-  const phone = document.getElementById('phone-input').value.trim();
+  const phoneInput = document.getElementById('phone-input');
+  const phone = phoneInput.value.trim();
   const errorMsg = document.getElementById('error-msg');
 
   const phoneRegex = /^[1-2][3-9][0-9]{9}$/;
@@ -34,17 +35,24 @@ function validatePhone() {
     startGame();
   } else {
     errorMsg.textContent = "請輸入正確的中國手機號碼";
+    phoneInput.value = ""; // 清空輸入欄
+    phoneInput.focus();    // 將焦點重新聚焦輸入欄
+
+    // 嘗試震動裝置（若支援）
+    if (navigator.vibrate) {
+      navigator.vibrate(200); // 震動 200ms
+    }
   }
 }
 
-// Enter 鍵觸發驗證（桌機與行動裝置適用）
+// Enter 鍵觸發驗證
 document.getElementById('phone-input').addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
     validatePhone();
   }
 });
 
-// 點擊或觸控輸入欄時清除錯誤訊息
+// 點擊或聚焦輸入欄時清除錯誤訊息
 document.getElementById('phone-input').addEventListener('focus', function() {
   document.getElementById('error-msg').textContent = '';
 });
