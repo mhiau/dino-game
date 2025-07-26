@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,28 +10,50 @@
 
 <div id="phone-container" style="text-align:center; margin-top:50px;">
   <h2>請輸入中國手機號碼以開始遊戲</h2>
-  <input type="text" id="phone-input" placeholder="例如：13812345678" maxlength="11">
+  <input 
+    type="text" 
+    id="phone-input" 
+    placeholder="例如：13812345678" 
+    maxlength="11"
+    enterkeyhint="go"
+  >
   <button onclick="validatePhone()">開始遊戲</button>
   <p id="error-msg" style="color:red;"></p>
 </div>
+
 <script>
 function validatePhone() {
-  const phone = document.getElementById('phone-input').value;
+  const phone = document.getElementById('phone-input').value.trim();
   const errorMsg = document.getElementById('error-msg');
-  const phoneRegex = /^1\d{10}$/;
+
+  const phoneRegex = /^[1-2][3-9][0-9]{9}$/;
+
   if (phoneRegex.test(phone)) {
     document.getElementById('phone-container').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
-    startGame(); // call startGame function after validation
+    startGame();
   } else {
-    errorMsg.textContent = "請輸入正確的中國手機號碼（11位數，以1開頭）";
+    errorMsg.textContent = "請輸入正確的中國手機號碼";
   }
 }
+
+// Enter 鍵觸發驗證（桌機與行動裝置適用）
+document.getElementById('phone-input').addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    validatePhone();
+  }
+});
+
+// 點擊或觸控輸入欄時清除錯誤訊息
+document.getElementById('phone-input').addEventListener('focus', function() {
+  document.getElementById('error-msg').textContent = '';
+});
 </script>
 
 <div id="game-container" style="display:none;">
   <canvas id="gameCanvas" width="800" height="200"></canvas>
   <script src="game.js"></script>
 </div>
+
 </body>
 </html>
